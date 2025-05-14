@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Listings</title>
+  <style>
+    :root {
+      --primary: #004b87;
+      --accent: #ff5722;
+      --white: #fff;
+      --light-bg: #f1f5f9;
+      --dark: #333;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: var(--light-bg);
+      color: var(--dark);
+    }
+
+    header, footer {
+      background: var(--primary);
+      color: var(--white);
+      padding: 1em;
+      text-align: center;
+    }
+
+    nav {
+      background: var(--white);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 0.5em 1em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .filters button {
+      background: var(--accent);
+      border: none;
+      color: white;
+      padding: 0.5em 1em;
+      margin: 0.5em;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .job-table {
+      display: table;
+      width: 100%;
+      margin-top: 1em;
+    }
+
+    .job-table thead {
+      background: #ddd;
+    }
+
+    .job-table th, .job-table td {
+      padding: 0.75em;
+      text-align: left;
+      border-bottom: 1px solid #ccc;
+      font-weight: bold;
+    }
+
+    .job-table a {
+      text-decoration: none;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .mobile-job-card {
+      display: none;
+      flex-direction: column;
+      background: var(--white);
+      margin: 1em;
+      border-radius: 8px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      padding: 1em;
+    }
+
+    .mobile-job-card div {
+      margin: 0.25em 0;
+    }
+
+    .mobile-job-card button {
+      margin: 1em auto 0 auto;
+      background: var(--accent);
+      color: var(--white);
+      border: none;
+      padding: 0.5em 1em;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+    @media screen and (max-width: 768px) {
+      .job-table {
+        display: none;
+      }
+      .mobile-job-card {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Latest Government Jobs</h1>
+  </header>
+
+  <nav>
+    <h2>Job Listings</h2>
+    <div class="filters">
+      <button onclick="sortByDate()">Sort by Last Date</button>
+      <button onclick="sortByLatest()">Sort by Newest</button>
+    </div>
+  </nav>
+
+  <section id="jobs"></section>
+
+  <footer>
+    <p>&copy; 2025 Sarkari Result | Job Blog Website</p>
+  </footer>
+
+  <script>
+    const jobs = [
+      {
+        title: "RRB ALP",
+        totalPost: "5696",
+        qualification: "10th + ITI / Diploma",
+        lastDate: "2025-05-19"
+      },
+      {
+        title: "Junior Assistant Manager",
+        totalPost: "676",
+        qualification: "Any Graduate (60% / 55%)",
+        lastDate: "2025-05-20"
+      },
+      {
+        title: "SSC CHSL 2025",
+        totalPost: "5000+",
+        qualification: "12th Pass",
+        lastDate: "2025-06-07"
+      }
+    ];
+
+    const jobsContainer = document.getElementById('jobs');
+
+    function renderJobs(list) {
+      const tableView = `
+        <table class="job-table">
+          <thead>
+            <tr>
+              <th>Job Title</th>
+              <th>Total Post</th>
+              <th>Qualification</th>
+              <th>Last Date</th>
+              <th>Apply</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${list.map((job, index) => `
+              <tr>
+                <td>${job.title}</td>
+                <td>${job.totalPost}</td>
+                <td>${job.qualification}</td>
+                <td>${job.lastDate}</td>
+                <td><a href="job-details.html?id=${index}" target="_blank">Apply</a></td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      `;
+
+      const mobileView = list.map((job, index) => `
+        <div class="mobile-job-card">
+          <div><strong>Job Title:</strong> ${job.title}</div>
+          <div><strong>Total Posts:</strong> ${job.totalPost}</div>
+          <div><strong>Qualification:</strong> ${job.qualification}</div>
+          <div><strong>Last Date:</strong> ${job.lastDate}</div>
+          <button onclick="window.open('job-details.html?id=${index}', '_blank')">Apply</button>
+        </div>
+      `).join('');
+
+      jobsContainer.innerHTML = tableView + mobileView;
+    }
+
+    function sortByDate() {
+      const sorted = [...jobs].sort((a, b) => new Date(a.lastDate) - new Date(b.lastDate));
+      renderJobs(sorted);
+    }
+
+    function sortByLatest() {
+      renderJobs([...jobs].reverse());
+    }
+
+    // Initial Render
+    sortByLatest();
+  </script>
+</body>
+</html>

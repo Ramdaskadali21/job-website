@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Portal with Blog Feature</title>
+  <style>
+    :root {
+      --primary: #004b87;
+      --accent: #ff9800;
+      --white: #ffffff;
+      --light-bg: #f4f4f4;
+      --text-dark: #333;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--light-bg);
+      margin: 0;
+      padding: 0;
+      color: var(--text-dark);
+    }
+
+    header, footer {
+      background: var(--primary);
+      color: var(--white);
+      text-align: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .job {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .job-title {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    .job-info {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .job-info div {
+      margin: 5px 0;
+    }
+
+    .apply-btn, .details-btn {
+      background: var(--accent);
+      color: var(--white);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .job-details {
+      margin-top: 15px;
+      display: none;
+      background: #f9f9f9;
+      border-left: 4px solid var(--primary);
+      padding: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .job-info {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Latest Job Openings</h1>
+  </header>
+
+  <div class="container" id="job-list">
+    <!-- Jobs will be inserted here by JS -->
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Job Portal | All Rights Reserved</p>
+  </footer>
+
+  <script>
+    const jobs = [
+      {
+        title: "IDBI Junior Assistant Manager (JAM)",
+        totalPost: 676,
+        qualification: "Bachelor's Degree in Any Stream (Gen/OBC/EWS: 60%, SC/ST/PH: 55%)",
+        lastDate: "2025-05-20",
+        details: "This recruitment is for Grade 'O' Junior Assistant Manager at IDBI. The selection will be through an online exam followed by an interview. Training will be provided before joining."
+      },
+      {
+        title: "SBI Clerk 2025",
+        totalPost: 5000,
+        qualification: "Graduation in Any Discipline",
+        lastDate: "2025-06-01",
+        details: "State Bank of India is recruiting Clerks for various branches across India. The selection involves Prelims and Mains examinations."
+      },
+      {
+        title: "Railway Apprentice 2025",
+        totalPost: 2500,
+        qualification: "10th Pass with ITI in Relevant Trade",
+        lastDate: "2025-05-30",
+        details: "Indian Railways invites applications for Trade Apprentice positions under different zones. Duration of apprenticeship is 1 year."
+      }
+    ];
+
+    const jobList = document.getElementById('job-list');
+    const today = new Date();
+
+    jobs
+      .sort((a, b) => new Date(a.lastDate) - new Date(b.lastDate))
+      .forEach((job, index) => {
+        const jobDiv = document.createElement('div');
+        jobDiv.className = 'job';
+        jobDiv.innerHTML = `
+          <div class="job-title">${job.title}</div>
+          <div class="job-info">
+            <div><strong>Total Posts:</strong> ${job.totalPost}</div>
+            <div><strong>Qualification:</strong> ${job.qualification}</div>
+            <div><strong>Last Date:</strong> ${job.lastDate}</div>
+          </div>
+          <button class="apply-btn" onclick="window.open('#','_blank')">Apply Now</button>
+          <button class="details-btn" onclick="toggleDetails(${index})">Read More</button>
+          <div class="job-details" id="details-${index}">${job.details}</div>
+        `;
+        jobList.appendChild(jobDiv);
+      });
+
+    function toggleDetails(index) {
+      const detailDiv = document.getElementById(`details-${index}`);
+      if (detailDiv.style.display === 'block') {
+        detailDiv.style.display = 'none';
+      } else {
+        detailDiv.style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>

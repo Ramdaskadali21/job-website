@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Job Details</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    header {
+      background-color: #004b87;
+      color: #fff;
+      padding: 1em;
+      text-align: center;
+    }
+
+    section {
+      background: white;
+      padding: 2em;
+      margin: 2em;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      border-bottom: 2px solid #004b87;
+      padding-bottom: 5px;
+      margin-bottom: 1em;
+      color: #004b87;
+    }
+
+    .info {
+      margin-bottom: 1em;
+    }
+
+    strong {
+      display: inline-block;
+      width: 150px;
+    }
+
+    footer {
+      background: #004b87;
+      color: white;
+      text-align: center;
+      padding: 1em;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Job Details</h1>
+  </header>
+
+  <section id="job-detail">
+    <h2>Loading...</h2>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Sarkari Result | Job Blog Website</p>
+  </footer>
+
+  <script>
+    const jobData = [
+      {
+        title: "RRB ALP",
+        totalPost: "5696",
+        qualification: "10th + ITI / Diploma",
+        lastDate: "2025-05-19"
+      },
+      {
+        title: "Junior Assistant Manager",
+        totalPost: "676",
+        qualification: "Any Graduate (60% / 55%)",
+        lastDate: "2025-05-20"
+      },
+      {
+        title: "SSC CHSL 2025",
+        totalPost: "5000+",
+        qualification: "12th Pass",
+        lastDate: "2025-06-07"
+      }
+    ];
+
+    const params = new URLSearchParams(window.location.search);
+    const jobId = parseInt(params.get("id"));
+    const container = document.getElementById("job-detail");
+
+    if (!isNaN(jobId) && jobData[jobId]) {
+      const job = jobData[jobId];
+      container.innerHTML = `
+        <h2>${job.title}</h2>
+        <div class="info"><strong>Total Posts:</strong> ${job.totalPost}</div>
+        <div class="info"><strong>Qualification:</strong> ${job.qualification}</div>
+        <div class="info"><strong>Last Date to Apply:</strong> ${job.lastDate}</div>
+      `;
+    } else {
+      container.innerHTML = `<h2>Job Not Found</h2>`;
+    }
+  </script>
+</body>
+</html>
